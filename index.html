@@ -100,7 +100,19 @@
             transition: all 0.3s ease;
             flex-shrink: 0;
         }
-
+        /* 表單按鈕 */
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            padding: 16px 48px;
+            border-radius: 50px;
+            letter-spacing: 3px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        @media (min-width: 768px) {
+            .btn-primary { width: auto; }
+        }
         /* 表單樣式 */
         input[type="text"], input[type="email"], input[type="number"], select, textarea {
             border: 1px solid #e2e2e2 !important;
