@@ -435,8 +435,10 @@
         const audio = document.getElementById('bg-audio');
         const welcomeOverlay = document.getElementById('welcome-overlay');
         const musicBtn = document.getElementById('music-toggle');
-        const totalInput = document.getElementById('total_guests');
-        const condFields = document.getElementById('conditional-fields');
+        const guestDetails = document.getElementById('guest-details');
+        const totalGuestsInput = document.getElementById('total_guests_input');
+        const relationshipSelect = document.getElementById('relationship_select');
+        const emailInput = document.getElementById('email_input');
 
         function startExperience() {
             welcomeOverlay.style.opacity = '0';
@@ -463,11 +465,22 @@
             }
         }
 
-        totalInput.addEventListener('input', function() {
-            const val = parseInt(this.value);
-            condFields.style.display = (val > 0) ? 'block' : 'none';
-        });
-
+        // 出席邏輯
+        function toggleAttendance(isParticipating) {
+            if (isParticipating) {
+                guestDetails.style.display = 'block';
+                if (totalGuestsInput.value === '0') totalGuestsInput.value = '1';
+                // 設為必填
+                relationshipSelect.required = true;
+                emailInput.required = true;
+            } else {
+                guestDetails.style.display = 'none';
+                totalGuestsInput.value = '0';
+                // 取消必填以免隱藏時無法送出
+                relationshipSelect.required = false;
+                emailInput.required = false;
+            }
+        }
         function showSuccess() {
             document.getElementById('success-modal').style.display = 'flex';
             document.querySelector('form').reset();
