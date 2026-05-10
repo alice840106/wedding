@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -26,7 +27,7 @@
 
         h1, h2, h3, .en-font { font-family: 'Cormorant Garamond', serif; }
 
-        /* 開場畫面 */
+        /* 開場歡迎畫面 */
         #welcome-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -39,29 +40,32 @@
             transition: opacity 1s ease-out, visibility 1s;
         }
 
-        /* 導覽列 */
+        /* 導覽列：毛玻璃 */
         nav {
             backdrop-filter: blur(12px);
             background-color: rgba(255, 255, 255, 0.85);
             border-bottom: 1px solid rgba(212, 163, 115, 0.1);
-            height: 64px;
+            height: 80px;
             display: flex;
             align-items: center;
         }
+        @media (max-width: 768px) {
+            nav { height: 70px; }
+        }
 
         .nav-logo {
-            height: 300px;
+            height: 560px;
             width: auto;
             object-fit: contain;
             flex-shrink: 0;
         }
         @media (max-width: 768px) {
-            .nav-logo { height: 70px; }
+            .nav-logo { height: 44px; }
         }
 
         /* 影片 Hero */
         .hero-section {
-            padding-top: 100px;
+            padding-top: 110px;
             background: linear-gradient(180deg, #ffffff 0%, var(--bg-cream) 100%);
             display: flex;
             flex-direction: column;
@@ -97,21 +101,7 @@
             flex-shrink: 0;
         }
 
-        /* 按鈕樣式 */
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            padding: 16px 48px;
-            border-radius: 50px;
-            letter-spacing: 3px;
-            width: 100%;
-            transition: all 0.3s;
-        }
-        @media (min-width: 768px) {
-            .btn-primary { width: auto; }
-        }
-
-        /* 表單元件 */
+        /* 表單樣式 */
         input[type="text"], input[type="email"], input[type="number"], select, textarea {
             border: 1px solid #e2e2e2 !important;
             border-radius: 8px !important;
@@ -129,7 +119,6 @@
             flex-shrink: 0;
         }
 
-        /* 關鍵：初始隱藏區塊 */
         .conditional-section {
             display: none;
             animation: fadeIn 0.6s forwards;
@@ -194,19 +183,20 @@
                 <a href="#details" class="hover:text-[#d4a373]">Details</a>
                 <a href="#rsvp" class="hover:text-[#d4a373]">RSVP</a>
             </div>
-            <a href="https://line.me/ti/p/%40433efslw" target="_blank" class="nav-line-capsule">
+            <a href="https://line.me/R/ti/p/%40433efslw" target="_blank" class="nav-line-capsule">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M24 10.304c0-5.232-5.383-9.5-12-9.5-6.617 0-12 4.268-12 9.5 0 4.69 4.263 8.618 10.023 9.352.39.085.92.258 1.157.592.21.301.138.766.067 1.066l-.284 1.703c-.086.513-.399 2.008 1.722.016 1.832-1.72 9.873-10.026 11.104-11.411 1.231-1.385 1.231-2.457 1.211-3.318z"/></svg>
                 <span class="hidden xs:inline">LINE ID</span><span class="xs:hidden">LINE</span>
             </a>
         </div>
     </nav>
 
-    <!-- 音樂與影片區 -->
+    <!-- 音樂開關 -->
     <button id="music-toggle" onclick="toggleMusic()" style="display: none;">
         <svg id="icon-mute" class="hidden" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16"><path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zm7.137 2.096a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0z"/></svg>
         <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16"><path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/><path d="M3.5 3.5l7 4.5-7 4.5V3.5z"/></svg>
     </button>
 
+    <!-- 影片與內容 -->
     <section class="hero-section">
         <div class="video-wrapper">
             <video muted loop playsinline id="wedding-video"><source src="Video.mp4" type="video/mp4"></video>
@@ -218,7 +208,7 @@
         </div>
     </section>
 
-    <!-- 內文區 -->
+    <!-- 內文 -->
     <section id="about" class="py-24 px-6 max-w-2xl mx-auto text-center">
         <h2 class="text-[#8da399] text-3xl mb-12 font-medium tracking-widest uppercase">About Us</h2>
         <p class="leading-loose tracking-[0.15em] text-gray-600">
@@ -231,7 +221,7 @@
 
     <section id="details" class="bg-white py-24 px-6 text-center">
         <h2 class="text-[#d4a373] text-3xl mb-14 font-medium tracking-widest uppercase">Details</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto text-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
             <div>
                 <p class="text-[10px] tracking-[0.3em] text-gray-300 mb-4 uppercase">When</p>
                 <p class="tracking-[0.1em] text-lg font-medium">2026 年 09 月 12 日<br><span class="text-sm text-gray-400 font-light">12:00 PM 準時開席</span></p>
@@ -250,6 +240,7 @@
     <section id="rsvp" class="py-24 px-6 max-w-xl mx-auto">
         <div class="text-center mb-16">
             <h2 class="text-[#8da399] text-3xl md:text-4xl mb-4 font-light tracking-widest uppercase">RSVP 出席回函</h2>
+            <p class="text-[10px] tracking-[0.2em] text-gray-400 uppercase">Please reply by Nov 30, 2024</p>
         </div>
 
         <script type="text/javascript">var submitted=false;</script>
@@ -257,7 +248,7 @@
 
         <form action="https://docs.google.com/forms/d/e/1FAIpQLSeO8Fq9p5a9BtdWlmmVnjik9EAeNt8evsoyaghbuGiOUThNjw/formResponse" method="post" target="hidden_iframe" onsubmit="submitted=true;">
             <div class="space-y-8">
-                <!-- 姓名 (必填) -->
+                <!-- 姓名 (始終必填) -->
                 <div>
                     <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase font-bold">姓名 Name</label>
                     <input type="text" name="entry.1997533286" required>
@@ -278,7 +269,7 @@
                     </div>
                 </div>
 
-                <!-- 只有參加才顯示的區塊 -->
+                <!-- 參加才顯示的區塊 -->
                 <div id="guest-details" class="conditional-section space-y-8 border-t border-gray-100 pt-8">
                     <div>
                         <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase font-bold">關係 Relation</label>
@@ -334,7 +325,7 @@
                     </div>
                 </div>
 
-                <!-- 留言祝福 -->
+                <!-- 留言 -->
                 <div>
                     <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase font-bold">留言祝福 Message</label>
                     <textarea name="entry.649353053" rows="4"></textarea>
@@ -347,15 +338,15 @@
         </form>
     </section>
 
-    <!-- 頁尾 LINE -->
+    <!-- 底部 LINE -->
     <section class="py-24 px-6 bg-[#f9f9f9] flex justify-center w-full">
         <div class="max-w-md w-full text-center bg-white p-10 rounded-3xl shadow-sm border border-gray-100 mx-auto">
             <h3 class="text-2xl text-[#8da399] mb-3 font-medium">Stay Connected</h3>
             <p class="text-[10px] text-gray-400 tracking-[0.2em] mb-10 uppercase">Official Line Account</p>
-            <img src="IMG_8755.png" alt="LINE QR" class="w-40 h-40 mx-auto mb-8 p-3 bg-white border border-gray-100 rounded-2xl" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://line.me/ti/p/%40433efslw'">
+            <img src="IMG_8755.png" alt="LINE QR" class="w-40 h-40 mx-auto mb-8 p-3 bg-white border border-gray-100 rounded-2xl" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://line.me/R/ti/p/%40433efslw'">
             <a href="https://line.me/ti/p/%40433efslw" target="_blank" class="inline-flex items-center justify-center gap-3 bg-[#06C755] text-white px-10 py-3 rounded-full text-sm font-medium w-full md:w-auto transition-transform hover:scale-105">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 10.304c0-5.232-5.383-9.5-12-9.5-6.617 0-12 4.268-12 9.5 0 4.69 4.263 8.618 10.023 9.352.39.085.92.258 1.157.592.21.301.138.766.067 1.066l-.284 1.703c-.086.513-.399 2.008 1.722.016 1.832-1.72 9.873-10.026 11.104-11.411 1.231-1.385 1.231-2.457 1.211-3.318z"/></svg>
-                <span>加入好友<br>取得婚禮第一手消息</span>
+                <span>加入好友取得婚禮第一手消息</span>
             </a>
         </div>
     </section>
@@ -368,12 +359,11 @@
     <div id="success-modal">
         <div class="modal-content">
             <h3 class="text-2xl text-[#d4a373] mb-6">回函已送出</h3>
-            <p class="text-[14px] tracking-widest text-gray-400 mb-6 uppercase">感謝您的回覆，期待您的蒞臨!</p>
-            <div class="bg-gray-50 p-6 rounded-2xl mb-8 text-center">
-                <p class="text-[10px] tracking-widest text-[#8da399] font-bold mb-4 uppercase text-center w-full">歡迎加入婚禮官方 LINE</p>
-                <img src="IMG_8755.png" alt="LINE QR" class="w-32 h-32 mx-auto mb-4 rounded-lg bg-white p-2" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://line.me/ti/p/%40433efslw'">
+            <div class="bg-gray-50 p-6 rounded-2xl mb-8">
+                <p class="text-[10px] tracking-widest text-[#8da399] font-bold mb-4 uppercase">加入官方 LINE</p>
+                <img src="IMG_8755.png" alt="LINE QR" class="w-32 h-32 mx-auto mb-4 rounded-lg bg-white p-2" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://line.me/R/ti/p/%40433efslw'">
                 <a href="https://line.me/ti/p/%40433efslw" target="_blank" class="flex items-center justify-center gap-2 bg-[#06C755] text-white py-3 rounded-full text-xs font-bold w-full">
-                    <span>取得婚禮第一手消息</span>
+                    <span>取得當日地圖資訊</span>
                 </a>
             </div>
             <button onclick="closeModal()" class="text-[10px] tracking-widest text-gray-300 uppercase underline">Close</button>
@@ -386,8 +376,8 @@
         const welcomeOverlay = document.getElementById('welcome-overlay');
         const musicBtn = document.getElementById('music-toggle');
         const guestDetails = document.getElementById('guest-details');
-        const totalGuestsInput = document.getElementById('total_guests_input');
-        const relationshipSelect = document.getElementById('relationship_select');
+        const totalInput = document.getElementById('total_guests_input');
+        const relSelect = document.getElementById('relationship_select');
         const emailInput = document.getElementById('email_input');
 
         function startExperience() {
@@ -396,7 +386,7 @@
                 welcomeOverlay.style.visibility = 'hidden';
                 document.body.classList.remove('overflow-hidden');
                 musicBtn.style.display = 'flex';
-                audio.play().catch(e => console.log("Audio play blocked"));
+                audio.play().catch(e => console.log("Blocked"));
                 video.play();
             }, 1000);
         }
@@ -415,25 +405,28 @@
             }
         }
 
-        // 核心邏輯：控制顯示與必填狀態
+        // 重要修正：切換出席狀態時同時切換 required
         function toggleAttendance(isParticipating) {
             if (isParticipating) {
                 guestDetails.style.display = 'block';
-                if (totalGuestsInput.value === '0') totalGuestsInput.value = '1';
-                relationshipSelect.required = true;
+                if (totalInput.value === '0') totalInput.value = '1';
+                relSelect.required = true;
                 emailInput.required = true;
+                totalInput.required = true;
             } else {
                 guestDetails.style.display = 'none';
-                totalGuestsInput.value = '0';
-                relationshipSelect.required = false;
+                totalInput.value = '0';
+                // 移除隱藏欄位的必填，否則無法送出
+                relSelect.required = false;
                 emailInput.required = false;
+                totalInput.required = false;
             }
         }
 
         function showSuccess() {
             document.getElementById('success-modal').style.display = 'flex';
             document.querySelector('form').reset();
-            guestDetails.style.display = 'none'; // 重置時隱藏
+            guestDetails.style.display = 'none';
             submitted = false;
         }
 
@@ -443,3 +436,5 @@
     </script>
 </body>
 </html>
+
+
