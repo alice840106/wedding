@@ -284,43 +284,63 @@
         </div>
     </section>
 
-    <!-- 出席回函 -->
+    <!-- RSVP 出席回函 -->
     <section id="rsvp" class="py-24 px-6 max-w-xl mx-auto">
         <div class="text-center mb-16">
-            <h2 class="text-[#8da399] text-4xl mb-4 font-light tracking-widest">出席回函 RSVP</h2>
+            <h2 class="text-[#8da399] text-3xl md:text-4xl mb-4 font-light tracking-widest uppercase">RSVP 出席回函</h2>
+            <p class="text-[10px] tracking-[0.2em] text-gray-400 uppercase">Please reply by Nov 30, 2024</p>
         </div>
 
-        <!-- Google Form 核心 -->
         <script type="text/javascript">var submitted=false;</script>
         <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {showSuccess();}"></iframe>
 
         <form action="https://docs.google.com/forms/d/e/1FAIpQLSeO8Fq9p5a9BtdWlmmVnjik9EAeNt8evsoyaghbuGiOUThNjw/formResponse" method="post" target="hidden_iframe" onsubmit="submitted=true;">
             <div class="space-y-8">
+                <!-- 姓名 -->
                 <div>
-                    <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase">姓名 Name</label>
+                    <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase font-bold">姓名 Name</label>
                     <input type="text" name="entry.1997533286" required>
                 </div>
+
+                <!-- 是否出席 (控制中心) -->
                 <div>
-                    <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase">電子郵件 Email</label>
-                    <input type="email" name="entry.1918510986">
+                    <label class="block text-[10px] mb-4 tracking-[0.2em] text-gray-400 uppercase font-bold">是否出席 Attendance</label>
+                    <div class="flex gap-8">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="attendance_status" value="yes" onchange="toggleAttendance(true)" required>
+                            <span class="text-sm">會喔，準時參加</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="attendance_status" value="no" onchange="toggleAttendance(false)">
+                            <span class="text-sm">不克參加，送上祝福</span>
+                        </label>
+                    </div>
                 </div>
-                <div class="grid grid-cols-2 gap-6">
+
+                <!-- 只有參加才顯示的區塊 -->
+                <div id="guest-details" class="conditional-section space-y-8 border-t border-gray-100 pt-8">
+                    <!-- 關係 -->
                     <div>
-                        <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase">關係 Relation</label>
+                        <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase font-bold">關係 Relation</label>
                         <select name="entry.1610376119" required>
-                            <option value="" disabled selected>請選擇</option>
+                            <option value="" disabled selected>請選擇關係</option>
                             <option value="男方親友">男方親友</option>
                             <option value="女方親友">女方親友</option>
                         </select>
                     </div>
+    
+                    <!-- 電子郵件 -->
                     <div>
-                        <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase">參加人數 Attendance</label>
-                        <input type="number" id="total_guests" name="entry.215656993" required min="0">
+                        <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase font-bold">電子郵件 Email</label>
+                        <input type="email" name="entry.1918510986" required>
                     </div>
-                </div>
+                    <!-- 賓客人數 (重要：不參加時自動設為 0) -->
+                    <div>
+                        <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase font-bold">參加總人數 Adults</label>
+                        <input type="number" id="total_guests_input" name="entry.215656993" min="0" value="1">
+                    </div>
 
-                <!-- 智能欄位 -->
-                <div id="conditional-fields" class="hidden-fields space-y-6 bg-white p-6 rounded-xl border border-[#d4a373] border-opacity-20 shadow-sm">
+                    <!-- 葷素統計 -->
                     <div class="grid grid-cols-2 gap-6">
                         <div>
                             <label class="block text-[10px] mb-2 tracking-[0.1em] text-[#d4a373]">葷食人數</label>
@@ -331,38 +351,41 @@
                             <input type="number" name="entry.393806979" min="0" value="0">
                         </div>
                     </div>
+                    
+                    <!-- 兒童座椅 -->
                     <div>
-                        <label class="block text-[10px] mb-2 tracking-[0.1em] text-gray-400">兒童座椅需求</label>
+                        <label class="block text-[10px] mb-2 tracking-[0.1em] text-gray-400 uppercase font-bold">兒童座椅需求 Child Chairs</label>
                         <input type="number" name="entry.166619634" min="0" value="0">
                     </div>
-                    <!-- 喜帖需求 (核取方塊多選) -->
-                    <div class="pt-4 border-t border-gray-100">
-                        <label class="block text-[10px] mb-4 tracking-[0.2em] text-gray-400 uppercase">喜帖需求 Invitation Needs (可複選)</label>
+
+                    <!-- 喜帖需求 -->
+                    <div>
+                        <label class="block text-[10px] mb-4 tracking-[0.2em] text-gray-400 uppercase font-bold text-center">喜帖需求 Invitation Needs (可複選)</label>
                         <div class="space-y-4">
                             <label class="flex items-center gap-3 cursor-pointer group">
                                 <input type="checkbox" name="entry.1645831829" value="要，請給我電子喜帖">
-                                <span class="text-sm text-gray-600 group-hover:text-[#d4a373] transition-colors">要，請給我電子喜帖</span>
+                                <span class="text-sm text-gray-600 group-hover:text-[#d4a373]">要，請給我電子喜帖</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
                                 <input type="checkbox" name="entry.1645831829" value="要，請給我紙本喜帖">
-                                <span class="text-sm text-gray-600 group-hover:text-[#d4a373] transition-colors">要，請給我紙本喜帖</span>
+                                <span class="text-sm text-gray-600 group-hover:text-[#d4a373]">要，請給我紙本喜帖</span>
                             </label>
                             <label class="flex items-center gap-3 cursor-pointer group">
                                 <input type="checkbox" name="entry.1645831829" value="不用，已經清楚婚禮資訊">
-                                <span class="text-sm text-gray-600 group-hover:text-[#d4a373] transition-colors">不用，已經清楚婚禮資訊</span>
+                                <span class="text-sm text-gray-600 group-hover:text-[#d4a373]">不用，已經清楚婚禮資訊</span>
                             </label>
                         </div>
                     </div>
                 </div>
 
+                <!-- 留言祝福 -->
                 <div>
-                    <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase">留言祝福 Message</label>
+                    <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase font-bold">留言祝福 Message</label>
                     <textarea name="entry.649353053" rows="4"></textarea>
                 </div>
 
-                <!-- 按鈕容器 -->
                 <div class="text-center pt-6">
-                    <button type="submit" class="btn-base btn-primary">
+                    <button type="submit" class="btn-primary">
                         送出回函 Submit
                     </button>
                 </div>
