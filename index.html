@@ -51,6 +51,7 @@
             height: 100px; /* 適合導覽列的高度 */
             width: auto;
             object-fit: contain;
+            flex-shrink: 0;
         }
         /* 影片 Hero：維持比例不變形 */
         .hero-section {
@@ -141,25 +142,24 @@
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); color: var(--primary);
         }
-
+        /* LINE 膠囊按鈕優化 */
         .nav-line-capsule {
             background-color: var(--line-green);
             color: white;
-            padding: 6px 16px;
+            padding: 5px 12px;
             border-radius: 50px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(6, 199, 85, 0.2);
+            flex-shrink: 0;
         }
-        .nav-line-capsule:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 15px rgba(6, 199, 85, 0.3);
-            opacity: 0.9;
+        @media (min-width: 768px) {
+            .nav-line-capsule { padding: 6px 16px; font-size: 11px; gap: 6px; }
         }
+
         /* LINE 導航按鈕樣式 */
         .nav-line-btn {
             background-color: var(--line-green);
