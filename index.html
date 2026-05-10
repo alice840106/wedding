@@ -46,7 +46,12 @@
             background-color: rgba(255, 255, 255, 0.75);
             border-bottom: 1px solid rgba(212, 163, 115, 0.1);
         }
-
+        /* 導覽列 Logo 樣式 */
+        .nav-logo {
+            height: 28px; /* 適合導覽列的高度 */
+            width: auto;
+            object-fit: contain;
+        }
         /* 影片 Hero：維持比例不變形 */
         .hero-section {
             padding-top: 80px;
@@ -157,9 +162,15 @@
         </div>
     </div>
 
-    <!-- 導覽列 -->
-    <nav class="fixed top-0 w-full z-50 px-6 py-5 flex justify-between items-center">
-        <div class="text-xl tracking-[0.3em] font-semibold text-[#d4a373]">惟翔x思葦｜相知相焦</div>
+
+   <!-- 導覽列 -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center">
+        <!-- Logo + 標題 組合 -->
+        <div class="flex items-center gap-3">
+            <img src="IMG_8765.png" alt="Logo" class="nav-logo" onerror="this.style.display='none';">
+            <div class="text-xl tracking-[0.3em] font-semibold text-[#d4a373]">惟翔x思葦｜相知相焦</div>
+        </div>
+        
         <div class="hidden md:flex space-x-10 text-[10px] tracking-[0.2em] uppercase font-medium">
             <a href="#about" class="hover:text-[#d4a373]">About</a>
             <a href="#details" class="hover:text-[#d4a373]">Details</a>
@@ -167,7 +178,6 @@
         </div>
         <div class="md:hidden text-[10px] tracking-widest text-[#d4a373]">2026.09.12</div>
     </nav>
-
     <!-- 音樂開關按鈕 -->
     <button id="music-toggle" onclick="toggleMusic()" style="display: none;">
         <svg id="icon-mute" class="hidden" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
