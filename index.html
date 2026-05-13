@@ -45,12 +45,12 @@
             backdrop-filter: blur(12px);
             background-color: rgba(255, 255, 255, 0.85);
             border-bottom: 1px solid rgba(212, 163, 115, 0.1);
-            height: 80px;
+            height: 90px;
             display: flex;
             align-items: center;
         }
         @media (max-width: 768px) {
-            nav { height: 70px; }
+            nav { height: 80px; }
         }
 
         .nav-logo {
@@ -60,7 +60,7 @@
             flex-shrink: 0;
         }
         @media (max-width: 768px) {
-            .nav-logo { height: 70px; }
+            .nav-logo { height: 60px; }
         }
 
         /* 影片 Hero */
@@ -80,6 +80,7 @@
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(212, 163, 115, 0.12);
             background: #000;
+            position: relative;
         }
 
         video { width: 100%; height: auto; display: block; }
@@ -100,7 +101,8 @@
             transition: all 0.3s ease;
             flex-shrink: 0;
         }
-        /* 表單按鈕 */
+
+        /* 按鈕樣式 */
         .btn-primary {
             background-color: var(--primary);
             color: white;
@@ -112,23 +114,6 @@
         }
         @media (min-width: 768px) {
             .btn-primary { width: auto; }
-        }
-        /* 表單樣式 */
-        input[type="text"], input[type="email"], input[type="number"], select, textarea {
-            border: 1px solid #e2e2e2 !important;
-            border-radius: 8px !important;
-            padding: 14px !important;
-            width: 100%;
-            background: white;
-            font-size: 14px;
-        }
-
-        input[type="radio"], input[type="checkbox"] {
-            accent-color: var(--primary);
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            flex-shrink: 0;
         }
 
         .conditional-section {
@@ -164,7 +149,7 @@
 <body class="overflow-hidden">
 
     <!-- 背景音樂 -->
-    <audio id="bg-audio" loop>
+    <audio id="bg-audio" loop preload="auto">
         <source src="Music.mp3" type="audio/mpeg">
     </audio>
 
@@ -202,16 +187,18 @@
         </div>
     </nav>
 
-    <!-- 音樂開關 -->
+    <!-- 音樂切換鈕 -->
     <button id="music-toggle" onclick="toggleMusic()" style="display: none;">
         <svg id="icon-mute" class="hidden" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16"><path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zm7.137 2.096a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0z"/></svg>
         <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16"><path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/><path d="M3.5 3.5l7 4.5-7 4.5V3.5z"/></svg>
     </button>
 
-    <!-- 影片與內容 -->
+    <!-- 影片區：增加 preload="auto" -->
     <section class="hero-section">
         <div class="video-wrapper">
-            <video muted loop playsinline id="wedding-video"><source src="Video.mp4" type="video/mp4"></video>
+            <video muted loop playsinline preload="auto" id="wedding-video">
+                <source src="Video.mp4" type="video/mp4">
+            </video>
         </div>
         <div class="text-center mt-10 px-6">
             <h2 class="text-xl md:text-3xl italic mb-3 font-light text-[#8da399]">A New Chapter Begins</h2>
@@ -220,7 +207,7 @@
         </div>
     </section>
 
-    <!-- 內文 -->
+    <!-- 內文區 -->
     <section id="about" class="py-24 px-6 max-w-2xl mx-auto text-center">
         <h2 class="text-[#8da399] text-3xl mb-12 font-medium tracking-widest uppercase">About Us</h2>
         <p class="leading-loose tracking-[0.15em] text-gray-600">
@@ -232,41 +219,41 @@
     </section>
 
     <section id="details" class="bg-white py-24 px-6 text-center">
-        <h2 class="text-[#d4a373] text-3xl mb-14 font-medium tracking-widest uppercase">Details</h2>
+        <h2 class="text-[#d4a373] text-3xl mb-14 font-medium tracking-widest uppercase text-center w-full">Details</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
             <div>
                 <p class="text-[10px] tracking-[0.3em] text-gray-300 mb-4 uppercase">When</p>
-                <p class="tracking-[0.1em] text-lg font-medium">2026 年 09 月 12 日<br><span class="text-sm text-gray-400 font-light">12:00 PM 準時開席</span></p>
+                <p class="tracking-[0.1em] text-lg font-medium text-center">2026 年 09 月 12 日<br><span class="text-sm text-gray-400 font-light">12:00 PM 準時開席</span></p>
             </div>
             <div>
                 <p class="text-[10px] tracking-[0.3em] text-gray-300 mb-4 uppercase">Where</p>
-                <p class="tracking-[0.1em] text-lg font-medium mb-2">新竹喜來登 東館宴會廳</p>
-                <p class="text-sm text-gray-500 leading-relaxed font-light">
+                <p class="tracking-[0.1em] text-lg font-medium mb-2 text-center">新竹喜來登 東館宴會廳</p>
+                <p class="text-sm text-gray-500 leading-relaxed font-light text-center">
                     <span class="no-wrap">新竹縣竹北市光明六路東一段265號</span>
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- RSVP 表單 -->
+    <!-- RSVP 出席回函 -->
     <section id="rsvp" class="py-24 px-6 max-w-xl mx-auto">
         <div class="text-center mb-16">
             <h2 class="text-[#8da399] text-3xl md:text-4xl mb-4 font-light tracking-widest uppercase">RSVP 出席回函</h2>
-         
+            <p class="text-[10px] tracking-[0.2em] text-gray-400 uppercase">Please reply by Nov 30, 2024</p>
         </div>
 
         <script type="text/javascript">var submitted=false;</script>
         <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {showSuccess();}"></iframe>
 
-        <form action="https://docs.google.com/forms/d/e/1FAIpQLSeO8Fq9p5a9BtdWlmmVnjik9EAeNt8evsoyaghbuGiOUThNjw/formResponse" method="post" target="hidden_iframe" onsubmit="submitted=true;">
+        <form id="rsvp-form" action="https://docs.google.com/forms/d/e/1FAIpQLSeO8Fq9p5a9BtdWlmmVnjik9EAeNt8evsoyaghbuGiOUThNjw/formResponse" method="post" target="hidden_iframe" onsubmit="submitted=true;">
             <div class="space-y-8">
-                <!-- 姓名 (始終必填) -->
+                <!-- 姓名 (必填) -->
                 <div>
                     <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase font-bold">姓名 Name</label>
                     <input type="text" name="entry.1997533286" required>
                 </div>
 
-                <!-- 是否出席 -->
+                <!-- 是否出席 (控制中心) -->
                 <div>
                     <label class="block text-[10px] mb-4 tracking-[0.2em] text-gray-400 uppercase font-bold">是否出席 Attendance</label>
                     <div class="flex gap-8">
@@ -281,7 +268,7 @@
                     </div>
                 </div>
 
-                <!-- 參加才顯示的區塊 -->
+                <!-- 參加詳細區塊 -->
                 <div id="guest-details" class="conditional-section space-y-8 border-t border-gray-100 pt-8">
                     <div>
                         <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase font-bold">關係 Relation</label>
@@ -291,17 +278,14 @@
                             <option value="女方親友">女方親友</option>
                         </select>
                     </div>
-
                     <div>
                         <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase font-bold">電子郵件 Email</label>
                         <input type="email" name="entry.1918510986" id="email_input">
                     </div>
-
                     <div>
                         <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase font-bold">參加總人數 Adults</label>
                         <input type="number" id="total_guests_input" name="entry.215656993" min="0" value="1">
                     </div>
-
                     <div class="grid grid-cols-2 gap-6">
                         <div>
                             <label class="block text-[10px] mb-2 tracking-[0.1em] text-[#d4a373]">葷食人數</label>
@@ -312,32 +296,20 @@
                             <input type="number" name="entry.393806979" min="0" value="0">
                         </div>
                     </div>
-                    
                     <div>
                         <label class="block text-[10px] mb-2 tracking-[0.1em] text-gray-400 uppercase font-bold">兒童座椅需求 Child Chairs</label>
                         <input type="number" name="entry.166619634" min="0" value="0">
                     </div>
-
                     <div>
-                        <label class="block text-[10px] mb-4 tracking-[0.2em] text-gray-400 uppercase font-bold">喜帖需求 Invitation Needs (可複選)</label>
+                        <label class="block text-[10px] mb-4 tracking-[0.2em] text-gray-400 uppercase font-bold text-center">喜帖需求 Invitation Needs (可複選)</label>
                         <div class="space-y-4">
-                            <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="entry.1645831829" value="要，請給我電子喜帖">
-                                <span class="text-sm text-gray-600 group-hover:text-[#d4a373]">要，請給我電子喜帖</span>
-                            </label>
-                            <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="entry.1645831829" value="要，請給我紙本喜帖">
-                                <span class="text-sm text-gray-600 group-hover:text-[#d4a373]">要，請給我紙本喜帖</span>
-                            </label>
-                            <label class="flex items-center gap-3 cursor-pointer group">
-                                <input type="checkbox" name="entry.1645831829" value="不用，已經清楚婚禮資訊">
-                                <span class="text-sm text-gray-600 group-hover:text-[#d4a373]">不用，已經清楚婚禮資訊</span>
-                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" name="entry.1645831829" value="要，請給我電子喜帖"><span class="text-sm text-gray-600">要，請給我電子喜帖</span></label>
+                            <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" name="entry.1645831829" value="要，請給我紙本喜帖"><span class="text-sm text-gray-600">要，請給我紙本喜帖</span></label>
+                            <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" name="entry.1645831829" value="不用，已經清楚婚禮資訊"><span class="text-sm text-gray-600">不用，已經清楚婚禮資訊</span></label>
                         </div>
                     </div>
                 </div>
 
-                <!-- 留言 -->
                 <div>
                     <label class="block text-[10px] mb-2 tracking-[0.2em] text-gray-400 uppercase font-bold">留言祝福 Message</label>
                     <textarea name="entry.649353053" rows="4"></textarea>
@@ -350,7 +322,7 @@
         </form>
     </section>
 
-    <!-- 底部 LINE -->
+    <!-- 底部 LINE 區塊 -->
     <section class="py-24 px-6 bg-[#f9f9f9] flex justify-center w-full">
         <div class="max-w-md w-full text-center bg-white p-10 rounded-3xl shadow-sm border border-gray-100 mx-auto">
             <h3 class="text-2xl text-[#8da399] mb-3 font-medium">Stay Connected</h3>
@@ -371,13 +343,10 @@
     <div id="success-modal">
         <div class="modal-content">
             <h3 class="text-2xl text-[#d4a373] mb-6">回函已送出</h3>
-             <p class="text-[14px] tracking-widest text-[#8da399] mb-4 uppercase">感謝你的填寫，期待你的蒞臨～</p>
             <div class="bg-gray-50 p-6 rounded-2xl mb-8">
                 <p class="text-[10px] tracking-widest text-[#8da399] font-bold mb-4 uppercase">加入官方 LINE</p>
-                <img src="IMG_8755.png" alt="LINE QR" class="w-32 h-32 mx-auto mb-4 rounded-lg bg-white p-2" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://line.me/R/ti/p/%40433efslw'">
-                <a href="https://line.me/ti/p/%40433efslw" target="_blank" class="flex items-center justify-center gap-2 bg-[#06C755] text-white py-3 rounded-full text-xs font-bold w-full">
-                    <span>取得第一手婚禮資訊</span>
-                </a>
+                <img src="IMG_8755.png" alt="LINE QR" class="w-32 h-32 mx-auto mb-4 rounded-lg bg-white p-2" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://line.me/R/ti/p/@YOUR_ID_HERE'">
+                <a href="https://line.me/ti/p/%40433efslw" target="_blank" class="flex items-center justify-center gap-2 bg-[#06C755] text-white py-3 rounded-full text-xs font-bold w-full"><span>取得當日地圖資訊</span></a>
             </div>
             <button onclick="closeModal()" class="text-[10px] tracking-widest text-gray-300 uppercase underline">Close</button>
         </div>
@@ -393,59 +362,69 @@
         const relSelect = document.getElementById('relationship_select');
         const emailInput = document.getElementById('email_input');
 
+        // 強力啟動體驗：重新加載影片並播放
         function startExperience() {
+            // 嘗試喚醒影片串流
+            video.load(); 
+            
+            // 立即執行播放，並加入重試機制
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Autoplay blocked, retrying on next frame...");
+                    // 如果被擋，使用者一邊看淡出動畫一邊重試
+                    setTimeout(() => video.play(), 500);
+                });
+            }
+            
+            audio.play().catch(e => console.log("Audio play blocked"));
+            
             welcomeOverlay.style.opacity = '0';
             setTimeout(() => {
                 welcomeOverlay.style.visibility = 'hidden';
                 document.body.classList.remove('overflow-hidden');
                 musicBtn.style.display = 'flex';
-                audio.play().catch(e => console.log("Blocked"));
-                video.play();
             }, 1000);
         }
 
         function toggleMusic() {
-            const iconMute = document.getElementById('icon-mute');
-            const iconPlay = document.getElementById('icon-play');
-            if (audio.paused) {
-                audio.play();
-                iconMute.classList.add('hidden');
-                iconPlay.classList.remove('hidden');
-            } else {
-                audio.pause();
-                iconMute.classList.remove('hidden');
-                iconPlay.classList.add('hidden');
+            if (audio.paused) { 
+                audio.play(); 
+                document.getElementById('icon-mute').classList.add('hidden'); 
+                document.getElementById('icon-play').classList.remove('hidden'); 
+            } else { 
+                audio.pause(); 
+                document.getElementById('icon-mute').classList.remove('hidden'); 
+                document.getElementById('icon-play').classList.add('hidden'); 
             }
         }
 
-        // 重要修正：切換出席狀態時同時切換 required
+        // 智慧出席：動態切換必填屬性以利送出
         function toggleAttendance(isParticipating) {
             if (isParticipating) {
                 guestDetails.style.display = 'block';
                 if (totalInput.value === '0') totalInput.value = '1';
                 relSelect.required = true;
                 emailInput.required = true;
-                totalInput.required = true;
             } else {
                 guestDetails.style.display = 'none';
                 totalInput.value = '0';
-                // 移除隱藏欄位的必填，否則無法送出
                 relSelect.required = false;
                 emailInput.required = false;
-                totalInput.required = false;
+                // 清除可能殘留的驗證錯誤
+                relSelect.setCustomValidity('');
+                emailInput.setCustomValidity('');
             }
         }
 
         function showSuccess() {
             document.getElementById('success-modal').style.display = 'flex';
-            document.querySelector('form').reset();
+            document.getElementById('rsvp-form').reset();
             guestDetails.style.display = 'none';
             submitted = false;
         }
 
-        function closeModal() {
-            document.getElementById('success-modal').style.display = 'none';
-        }
+        function closeModal() { document.getElementById('success-modal').style.display = 'none'; }
     </script>
 </body>
 </html>
