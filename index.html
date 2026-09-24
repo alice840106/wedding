@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>xx & xx | 婚禮邀請函</title>
     <!-- 引入字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif+TC:wght@300;400;600&display=swap" rel="stylesheet">
@@ -23,6 +22,7 @@
             color: var(--text-dark);
             scroll-behavior: smooth;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
         h1, h2, h3, .en-font { font-family: 'Cormorant Garamond', serif; }
@@ -43,6 +43,7 @@
         /* 導覽列：毛玻璃 */
         nav {
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             background-color: rgba(255, 255, 255, 0.85);
             border-bottom: 1px solid rgba(212, 163, 115, 0.1);
             height: 80px;
@@ -60,12 +61,12 @@
             flex-shrink: 0;
         }
         @media (max-width: 768px) {
-            .nav-logo { height: 70px; }
+            .nav-logo { height: 60px; }
         }
 
-        /* 影片 Hero */
+        /* 影片 Hero 區域 */
         .hero-section {
-            padding-top: 110px;
+            padding-top: 100px;
             background: linear-gradient(180deg, #ffffff 0%, var(--bg-cream) 100%);
             display: flex;
             flex-direction: column;
@@ -73,16 +74,51 @@
         }
 
         .video-wrapper {
+            position: relative;
             width: 92%;
             max-width: 900px;
             margin: 20px auto;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(212, 163, 115, 0.12);
-            background: #000;
+            background: #111;
+            cursor: pointer;
         }
 
-        video { width: 100%; height: auto; display: block; object-fit: cover; }
+        video { 
+            width: 100%; 
+            height: auto; 
+            display: block; 
+            object-fit: cover; 
+            background: #111;
+        }
+
+        /* 影片播放輔助圖示（支援手動喚醒補播） */
+        #video-play-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            color: #ffffff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 10;
+        }
+
+        .video-wrapper.is-paused #video-play-hint {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
 
         .no-wrap { white-space: nowrap !important; display: inline-block; }
 
@@ -176,7 +212,7 @@
             <h3 class="en-font text-[#d4a373] text-2xl tracking-[0.3em] mb-4">Welcome to Our Wedding</h3>
             <div class="w-12 h-[1px] bg-[#d4a373] mx-auto opacity-30 mb-8"></div>
             <h1 class="text-3xl tracking-[0.4em] font-light mb-12">xx & xx</h1>
-            <button class="border border-[#d4a373] text-[#d4a373] px-10 py-4 rounded-full en-font text-xs uppercase tracking-widest hover:bg-[#d4a373] hover:text-white transition-all" onclick="startExperience()">
+            <button class="border border-[#d4a373] text-[#d4a373] px-10 py-4 rounded-full en-font text-xs uppercase tracking-widest hover:bg-[#d4a373] hover:text-white transition-all shadow-sm" onclick="startExperience()">
                 Open Invitation
             </button>
         </div>
@@ -210,12 +246,27 @@
         <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16"><path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/><path d="M3.5 3.5l7 4.5-7 4.5V3.5z"/></svg>
     </button>
 
-    <!-- 影片與內容：補齊 muted / playsinline / preload 屬性 -->
+    <!-- 影片展示區（支援點擊手動喚醒補播） -->
     <section class="hero-section">
-        <div class="video-wrapper">
-            <video id="wedding-video" muted loop playsinline webkit-playsinline preload="auto">
+        <div class="video-wrapper is-paused" id="video-wrapper" onclick="handleVideoClick()">
+            <video 
+                id="wedding-video" 
+                muted 
+                loop 
+                playsinline 
+                webkit-playsinline 
+                x5-playsinline 
+                preload="auto"
+            >
                 <source src="Video.mp4" type="video/mp4">
+                您的瀏覽器不支援影片播放。
             </video>
+            <!-- 播放指示圖示 -->
+            <div id="video-play-hint" title="點擊播放影片">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                </svg>
+            </div>
         </div>
         <div class="text-center mt-10 px-6">
             <h2 class="text-xl md:text-3xl italic mb-3 font-light text-[#8da399]">A New Chapter Begins</h2>
@@ -388,6 +439,7 @@
 
     <script>
         const video = document.getElementById('wedding-video');
+        const videoWrapper = document.getElementById('video-wrapper');
         const audio = document.getElementById('bg-audio');
         const welcomeOverlay = document.getElementById('welcome-overlay');
         const musicBtn = document.getElementById('music-toggle');
@@ -396,25 +448,52 @@
         const relSelect = document.getElementById('relationship_select');
         const emailInput = document.getElementById('email_input');
 
-        // 核心修復：立即觸發播放，避免 setTimeout 導致使用者授權過期
-        function startExperience() {
-            // 1. 強制設定靜音，確保符合 Chrome/Safari 自動播放原則
-            video.muted = true;
+        // 監聽影片狀態：隨時切換播放指示圖示
+        video.addEventListener('play', () => {
+            videoWrapper.classList.remove('is-paused');
+        });
+        video.addEventListener('pause', () => {
+            videoWrapper.classList.add('is-paused');
+        });
+        video.addEventListener('stalled', () => {
+            console.warn('Safari video stalled, retrying...');
+            video.play().catch(e => console.log('Resume fail', e));
+        });
 
-            // 2. 點擊瞬間立即呼叫 play()
-            const playVideoPromise = video.play();
-            if (playVideoPromise !== undefined) {
-                playVideoPromise.catch(error => {
-                    console.warn("第一次播放被擋，嘗試重新載入流：", error);
-                    video.load();
-                    video.play().catch(e => console.error("重試仍被擋：", e));
+        // 點擊影片區域可隨時補播/暫停
+        function handleVideoClick() {
+            if (video.paused) {
+                video.muted = true;
+                video.play().catch(err => console.log('Manual play err:', err));
+            } else {
+                video.pause();
+            }
+        }
+
+        // 開場啟動體驗
+        function startExperience() {
+            // iOS Safari 規範：必須確保 video.muted = true 才能在觸控當下自動播放
+            video.muted = true;
+            video.defaultMuted = true;
+            video.playsInline = true;
+
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    videoWrapper.classList.remove('is-paused');
+                }).catch(error => {
+                    console.warn("Safari 攔截或低耗電模式啟動：", error);
+                    videoWrapper.classList.add('is-paused');
+                    setTimeout(() => {
+                        video.play().catch(e => console.log('Retry blocked:', e));
+                    }, 300);
                 });
             }
 
-            // 3. 同步喚醒背景音訊
-            audio.play().catch(e => console.log("Audio play blocked by browser policy"));
+            // 背景音樂播放
+            audio.play().catch(e => console.log("Audio play blocked by Safari"));
 
-            // 4. 平滑淡出開場畫面
+            // 平滑淡出開場
             welcomeOverlay.style.opacity = '0';
             setTimeout(() => {
                 welcomeOverlay.style.visibility = 'hidden';
@@ -437,7 +516,7 @@
             }
         }
 
-        // 重要修正：切換出席狀態時同時切換 required
+        // 出席連動必填
         function toggleAttendance(isParticipating) {
             if (isParticipating) {
                 guestDetails.style.display = 'block';
@@ -448,7 +527,6 @@
             } else {
                 guestDetails.style.display = 'none';
                 totalInput.value = '0';
-                // 移除隱藏欄位的必填，否則無法送出
                 relSelect.required = false;
                 emailInput.required = false;
                 totalInput.required = false;
