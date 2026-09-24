@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> xx & xx | 婚禮邀請函</title>
+    <title>xx & xx | 婚禮邀請函</title>
     <!-- 引入字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Noto+Serif+TC:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -37,7 +37,7 @@
             align-items: center;
             justify-content: center;
             z-index: 2000;
-            transition: opacity 1s ease-out, visibility 1s;
+            transition: opacity 0.8s ease-out, visibility 0.8s;
         }
 
         /* 導覽列：毛玻璃 */
@@ -82,7 +82,7 @@
             background: #000;
         }
 
-        video { width: 100%; height: auto; display: block; }
+        video { width: 100%; height: auto; display: block; object-fit: cover; }
 
         .no-wrap { white-space: nowrap !important; display: inline-block; }
 
@@ -100,6 +100,7 @@
             transition: all 0.3s ease;
             flex-shrink: 0;
         }
+
         /* 表單按鈕 */
         .btn-primary {
             background-color: var(--primary);
@@ -113,6 +114,7 @@
         @media (min-width: 768px) {
             .btn-primary { width: auto; }
         }
+
         /* 表單樣式 */
         input[type="text"], input[type="email"], input[type="number"], select, textarea {
             border: 1px solid #e2e2e2 !important;
@@ -164,7 +166,7 @@
 <body class="overflow-hidden">
 
     <!-- 背景音樂 -->
-    <audio id="bg-audio" loop>
+    <audio id="bg-audio" loop preload="auto">
         <source src="Music.mp3" type="audio/mpeg">
     </audio>
 
@@ -208,10 +210,12 @@
         <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16"><path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/><path d="M3.5 3.5l7 4.5-7 4.5V3.5z"/></svg>
     </button>
 
-    <!-- 影片與內容 -->
+    <!-- 影片與內容：補齊 muted / playsinline / preload 屬性 -->
     <section class="hero-section">
         <div class="video-wrapper">
-            <video muted loop playsinline id="wedding-video"><source src="Video.mp4" type="video/mp4"></video>
+            <video id="wedding-video" muted loop playsinline webkit-playsinline preload="auto">
+                <source src="Video.mp4" type="video/mp4">
+            </video>
         </div>
         <div class="text-center mt-10 px-6">
             <h2 class="text-xl md:text-3xl italic mb-3 font-light text-[#8da399]">A New Chapter Begins</h2>
@@ -252,7 +256,6 @@
     <section id="rsvp" class="py-24 px-6 max-w-xl mx-auto">
         <div class="text-center mb-16">
             <h2 class="text-[#8da399] text-3xl md:text-4xl mb-4 font-light tracking-widest uppercase">RSVP 出席回函</h2>
-         
         </div>
 
         <script type="text/javascript">var submitted=false;</script>
@@ -364,14 +367,14 @@
     </section>
 
     <footer class="py-12 text-center text-[9px] text-gray-300 tracking-[0.4em] uppercase">
-        © 2026 惟翔 & 思葦 Wedding &bull; All Rights Reserved
+        © 2026 xx & xx Wedding &bull; All Rights Reserved
     </footer>
 
     <!-- 成功彈窗 -->
     <div id="success-modal">
         <div class="modal-content">
             <h3 class="text-2xl text-[#d4a373] mb-6">回函已送出</h3>
-             <p class="text-[14px] tracking-widest text-[#8da399] mb-4 uppercase">感謝你的填寫，期待你的蒞臨～</p>
+            <p class="text-[14px] tracking-widest text-[#8da399] mb-4 uppercase">感謝你的填寫，期待你的蒞臨～</p>
             <div class="bg-gray-50 p-6 rounded-2xl mb-8">
                 <p class="text-[10px] tracking-widest text-[#8da399] font-bold mb-4 uppercase">加入官方 LINE</p>
                 <img src="IMG_8755.png" alt="LINE QR" class="w-32 h-32 mx-auto mb-4 rounded-lg bg-white p-2" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://line.me/R/ti/p/%40433efslw'">
@@ -393,15 +396,31 @@
         const relSelect = document.getElementById('relationship_select');
         const emailInput = document.getElementById('email_input');
 
+        // 核心修復：立即觸發播放，避免 setTimeout 導致使用者授權過期
         function startExperience() {
+            // 1. 強制設定靜音，確保符合 Chrome/Safari 自動播放原則
+            video.muted = true;
+
+            // 2. 點擊瞬間立即呼叫 play()
+            const playVideoPromise = video.play();
+            if (playVideoPromise !== undefined) {
+                playVideoPromise.catch(error => {
+                    console.warn("第一次播放被擋，嘗試重新載入流：", error);
+                    video.load();
+                    video.play().catch(e => console.error("重試仍被擋：", e));
+                });
+            }
+
+            // 3. 同步喚醒背景音訊
+            audio.play().catch(e => console.log("Audio play blocked by browser policy"));
+
+            // 4. 平滑淡出開場畫面
             welcomeOverlay.style.opacity = '0';
             setTimeout(() => {
                 welcomeOverlay.style.visibility = 'hidden';
                 document.body.classList.remove('overflow-hidden');
                 musicBtn.style.display = 'flex';
-                audio.play().catch(e => console.log("Blocked"));
-                video.play();
-            }, 1000);
+            }, 800);
         }
 
         function toggleMusic() {
